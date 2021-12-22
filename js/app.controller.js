@@ -9,8 +9,14 @@ window.onGetUserPos = onGetUserPos;
 
 function onInit() {
     mapService.initMap()
-        .then(() => {
-            console.log('Map is ready');
+        .then((map) => {
+            map.addListener("click", (mapsMouseEvent) => {
+                const position = (mapsMouseEvent.latLng.toJSON())
+                console.log(mapsMouseEvent);
+                const placeName = prompt('name?')
+                locService.createLocation(placeName, position)
+                onPanTo(position.lat, position.lng)
+            })
         })
         .catch(() => console.log('Error: cannot init map'));
 }
@@ -47,7 +53,7 @@ function onGetUserPos() {
             console.log('err!!!', err);
         })
 }
-function onPanTo() {
+function onPanTo(lat, lng) {
     console.log('Panning the Map');
-    mapService.panTo(35.6895, 139.6917);
+    mapService.panTo(lat, lng);
 }

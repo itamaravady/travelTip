@@ -1,0 +1,23 @@
+*{
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+.modal{
+    display: flex;
+    flex-direction: column;
+    background-color: blanchedalmond;
+    padding: 10px;
+    align-items: center;
+    gap: 10px;
+}
+
+.modal button{
+background-color: rgb(133, 7, 145);
+border-radius: 5px;
+padding: 20px;
+color: white;
+}
