@@ -12,7 +12,7 @@ var gMap;
 const API_KEY = 'AIzaSyCtnGiT2v1yGGn1vOvSjjAxBJQPURW-lao';
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
-    console.log('InitMap');
+    // console.log('InitMap');
     return _connectGoogleApi()
         .then(() => {
             console.log('google available');
@@ -20,9 +20,13 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
                 document.querySelector('#map'), {
                 center: { lat, lng },
                 zoom: 15
+
             })
-            console.log('Map!', gMap);
+            // console.log('Map!', gMap);
+            return getMap()
         })
+
+
 }
 
 function addMarker(loc) {
@@ -61,5 +65,8 @@ function getGeolocate(searchVal) {
     console.log(url);
     // fetch(url).then(res => res.json())
     // https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=YOUR_API_KEY
+}
 
+function getMap() {
+    return gMap
 }

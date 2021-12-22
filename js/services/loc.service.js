@@ -1,12 +1,26 @@
+import { storageService } from './storage.service.js'
+
 export const locService = {
-    getLocs
+    getLocs,
+    createLocation
 }
 
+const STORAGE_KEY = 'locsDB'
+const locs = storageService.loadFromStorage(STORAGE_KEY) || []
 
-const locs = [
-    { name: 'Greatplace', lat: 32.047104, lng: 34.832384 }, 
-    { name: 'Neveragain', lat: 32.047201, lng: 34.832581 }
-]
+function createLocation(name, pos) {
+    const { lat, lng } = pos
+    const loc = {
+        name,
+        lat,
+        lng,
+        createdAt: Date.now(),
+        wheather: 'Sunny',
+        updatedAt: 0
+    }
+    locs.push(loc)
+    storageService.saveToStorage(STORAGE_KEY, locs)
+}
 
 function getLocs() {
     return new Promise((resolve, reject) => {

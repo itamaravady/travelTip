@@ -11,8 +11,14 @@ window.onSearchLoc = onSearchLoc;
 
 function onInit() {
     mapService.initMap()
-        .then(() => {
-            console.log('Map is ready');
+        .then((map) => {
+            map.addListener("click", (mapsMouseEvent) => {
+                const position = (mapsMouseEvent.latLng.toJSON())
+                console.log(mapsMouseEvent);
+                const placeName = prompt('name?')
+                locService.createLocation(placeName, position)
+                onPanTo(position.lat, position.lng)
+            })
         })
         .catch(() => console.log('Error: cannot init map'));
 
@@ -51,11 +57,6 @@ function onGetUserPos() {
             console.log('err!!!', err);
         })
 }
-function onPanTo(lat = 35, long = 31) {
-    console.log('Panning the Map');
-    mapService.panTo(lat, long);
-}
-
 function onPanToMyLoc() {
     getPosition()
         .then(pos => {
@@ -70,5 +71,9 @@ function onPanToMyLoc() {
 function onSearchLoc(ev) {
     const searchVal = ev.target.value
     mapService.getGeolocate(searchVal);
+}
 
+function onPanTo(lat = 31, lng = 31) {
+    console.log('Panning the Map');
+    mapService.panTo(lat, lng);
 }
