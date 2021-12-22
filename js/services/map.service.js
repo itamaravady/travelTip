@@ -76,6 +76,7 @@ function getGeolocate(searchVal) {
     let pos;
     fetch(url).then(res => res.json())
         .then(res => {
+            console.log(res);
             const { lat, lng } = res.results[0].geometry.location;
             panTo(lat, lng);
         })
