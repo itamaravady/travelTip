@@ -10,6 +10,7 @@ export const mapService = {
 
 var gMap;
 const API_KEY = 'AIzaSyCtnGiT2v1yGGn1vOvSjjAxBJQPURW-lao';
+var gMarker;
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
     // console.log('InitMap');
@@ -35,7 +36,12 @@ function addMarker(loc) {
         map: gMap,
         title: 'Hello World!'
     });
-    return marker;
+
+    if (gMarker) {
+        gMarker.visible = false
+    }
+    gMarker = marker
+    return gMarker;
 }
 
 function panTo(lat, lng) {

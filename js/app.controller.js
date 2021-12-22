@@ -8,21 +8,27 @@ window.onGetLocs = onGetLocs;
 window.onGetUserPos = onGetUserPos;
 window.onPanToMyLoc = onPanToMyLoc;
 window.onSearchLoc = onSearchLoc;
+window.onCreateLocation = onCreateLocation;
+window.onCloseModal = onCloseModal;
+window.onDeleteLoc = onDeleteLoc;
+
+var gPos;
 
 function onInit() {
     mapService.initMap()
         .then((map) => {
             map.addListener("click", (mapsMouseEvent) => {
                 const position = (mapsMouseEvent.latLng.toJSON())
-                console.log(mapsMouseEvent);
-                const placeName = prompt('name?')
-                locService.createLocation(placeName, position)
+                document.querySelector('.modal').classList.add('open')
                 onPanTo(position.lat, position.lng)
+                onAddMarker(position.lat, position.lng)
+                gPos = position
             })
         })
         .catch(() => console.log('Error: cannot init map'));
 
     document.querySelector('input[type=search]').addEventListener('input', onSearchLoc);
+    onGetLocs()
 }
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
@@ -33,16 +39,19 @@ function getPosition() {
     })
 }
 
-function onAddMarker() {
+function onAddMarker(lat, lng) {
     console.log('Adding a marker');
-    mapService.addMarker({ lat: 32.0749831, lng: 34.9120554 });
+    mapService.addMarker({ lat, lng });
 }
 
 function onGetLocs() {
     locService.getLocs()
         .then(locs => {
-            console.log('Locations:', locs)
-            document.querySelector('.locs').innerText = JSON.stringify(locs)
+            if (locs.length) {
+                renderLocs(locs)
+            } else {
+                document.querySelector('.loc-container').innerText = 'No Saved Locations Yet!'
+            }
         })
 }
 
@@ -52,6 +61,7 @@ function onGetUserPos() {
             console.log('User position is:', pos.coords);
             document.querySelector('.user-pos').innerText =
                 `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`
+
         })
         .catch(err => {
             console.log('err!!!', err);
@@ -62,6 +72,7 @@ function onPanToMyLoc() {
         .then(pos => {
             const { latitude, longitude } = pos.coords;
             mapService.panTo(latitude, longitude);
+            onAddMarker(latitude, longitude)
         })
         .catch(err => {
             console.log('err!!!', err);
@@ -76,4 +87,41 @@ function onSearchLoc(ev) {
 function onPanTo(lat = 31, lng = 31) {
     console.log('Panning the Map');
     mapService.panTo(lat, lng);
+    onAddMarker(lat, lng)
+}
+
+function onCreateLocation() {
+    const elInp = document.querySelector('.place-name')
+    onCloseModal()
+    const name = elInp.value
+    if (!name || name === ' ') return
+    locService.createLocation(name, gPos)
+    onGetLocs()
+    elInp.value = ''
+}
+
+function onCloseModal() {
+    document.querySelector('.modal').classList.remove('open')
+}
+
+function renderLocs(locs) {
+    const strHtmls = locs.map(loc => {
+        return `
+        <div class="place">
+        <h2> Place-Name : ${loc.name}</h2>
+        <h4>Created : ${new Date(loc.createdAt)} </h4>
+        <div class="place-btns">
+        <button class="go-btn" onclick="onPanTo(${loc.lat},${loc.lng})">Go</button>
+        <button class="delete-btn" onclick="onDeleteLoc('${loc.id}')">Delete</button>
+        </div>
+        </div>
+        `
+    })
+    document.querySelector('.loc-container').innerHTML = strHtmls.join('')
+}
+
+function onDeleteLoc(locId) {
+    console.log(locId);
+    locService.deleteLoc(locId)
+    onGetLocs()
 }

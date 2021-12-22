@@ -1,23 +1,90 @@
-*{
-    box-sizing: border-box;
+* {
+  box-sizing: border-box;
 }
 
 body {
-    margin: 0;
+  margin: 0;
 }
 
-.modal{
-    display: flex;
-    flex-direction: column;
-    background-color: blanchedalmond;
-    padding: 10px;
-    align-items: center;
-    gap: 10px;
+.modal {
+  display: flex;
+  font-weight: bold;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  position: absolute;
+  flex-direction: column;
+  background-color: rgb(233, 168, 70);
+  padding: 25px;
+  align-items: center;
+  gap: 10px;
+  top: 40%;
+  transform: translate(-100%, 0);
+  transition: all 0.3s;
+  z-index: 5;
 }
 
-.modal button{
-background-color: rgb(133, 7, 145);
-border-radius: 5px;
-padding: 20px;
-color: white;
+.modal.open {
+  transform: translate(100%, 0);
+}
+
+.save-btn {
+  color: white;
+  background-color: rgb(133, 7, 145);
+  border-radius: 5px;
+  padding: 14px;
+  cursor: pointer;
+}
+
+.save-btn:hover {
+  background-color: rgb(95, 3, 104);
+}
+
+.close-btn {
+  position: absolute;
+  top: 0%;
+  right: 0%;
+  cursor: pointer;
+}
+
+.loc-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 10px;
+}
+
+.place {
+  border-radius: 10px;
+  color: white;
+  padding: 20px;
+  cursor: pointer;
+  background-color: tomato;
+}
+
+.place h2, .place h4{
+    font-family: Arial, Helvetica, sans-serif;
+    text-transform: capitalize;
+}
+
+.place-btns button {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.go-btn {
+  background-color: rgb(91, 50, 205);
+}
+
+.go-btn:hover {
+  background-color: rgb(51, 29, 112);
+}
+
+.delete-btn {
+  background-color: darkorange;
+}
+.delete-btn:hover {
+  background-color: rgb(168, 98, 11);
 }
