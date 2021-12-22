@@ -1,5 +1,5 @@
 
-
+import { apiService } from './apiKey.service.js'
 export const mapService = {
     initMap,
     addMarker,
@@ -10,7 +10,7 @@ export const mapService = {
 
 
 var gMap;
-const API_KEY = 'AIzaSyCtnGiT2v1yGGn1vOvSjjAxBJQPURW-lao';
+const API_KEY = apiService.getApi();
 var gMarker;
 
 function initMap() {
