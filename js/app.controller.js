@@ -11,6 +11,7 @@ window.onSearchLoc = onSearchLoc;
 window.onCreateLocation = onCreateLocation;
 window.onCloseModal = onCloseModal;
 window.onDeleteLoc = onDeleteLoc;
+window.onSaveLoc = onSaveLoc;
 
 var gPos;
 
@@ -27,7 +28,7 @@ function onInit() {
         })
         .catch(() => console.log('Error: cannot init map'));
 
-    document.querySelector('input[type=search]').addEventListener('input', onSearchLoc);
+    document.querySelector('input[type=search]').addEventListener('change', onSearchLoc);
     onGetLocs()
 }
 
@@ -125,3 +126,11 @@ function onDeleteLoc(locId) {
     locService.deleteLoc(locId)
     onGetLocs()
 }
+
+
+function onSaveLoc() {
+    const { lat, lng } = mapService.saveLoc();
+    let copyLink = `https://itamaravady.github.io/travelTip/index.html?lat=${lat}&lng=${lng}`;
+    navigator.clipboard.writeText(copyLink);
+}
+
