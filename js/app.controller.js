@@ -6,6 +6,8 @@ window.onAddMarker = onAddMarker;
 window.onPanTo = onPanTo;
 window.onGetLocs = onGetLocs;
 window.onGetUserPos = onGetUserPos;
+window.onPanToMyLoc = onPanToMyLoc;
+window.onSearchLoc = onSearchLoc;
 
 function onInit() {
     mapService.initMap()
@@ -13,6 +15,8 @@ function onInit() {
             console.log('Map is ready');
         })
         .catch(() => console.log('Error: cannot init map'));
+
+    document.querySelector('input[type=search]').addEventListener('input', onSearchLoc);
 }
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
@@ -47,7 +51,24 @@ function onGetUserPos() {
             console.log('err!!!', err);
         })
 }
-function onPanTo() {
+function onPanTo(lat = 35, long = 31) {
     console.log('Panning the Map');
-    mapService.panTo(35.6895, 139.6917);
+    mapService.panTo(lat, long);
+}
+
+function onPanToMyLoc() {
+    getPosition()
+        .then(pos => {
+            const { latitude, longitude } = pos.coords;
+            mapService.panTo(latitude, longitude);
+        })
+        .catch(err => {
+            console.log('err!!!', err);
+        })
+}
+
+function onSearchLoc(ev) {
+    const searchVal = ev.target.value
+    mapService.getGeolocate(searchVal);
+
 }

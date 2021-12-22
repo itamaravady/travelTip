@@ -3,10 +3,13 @@
 export const mapService = {
     initMap,
     addMarker,
-    panTo
+    panTo,
+    getGeolocate,
 }
 
+
 var gMap;
+const API_KEY = 'AIzaSyCtnGiT2v1yGGn1vOvSjjAxBJQPURW-lao';
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
     console.log('InitMap');
@@ -40,7 +43,6 @@ function panTo(lat, lng) {
 
 function _connectGoogleApi() {
     if (window.google) return Promise.resolve()
-    const API_KEY = 'AIzaSyDM16yk-WChbI04qed6dA9_FSMtnIczcNE'; //TODO: Enter your API Key
     var elGoogleApi = document.createElement('script');
     elGoogleApi.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}`;
     elGoogleApi.async = true;
@@ -50,4 +52,14 @@ function _connectGoogleApi() {
         elGoogleApi.onload = resolve;
         elGoogleApi.onerror = () => reject('Google script failed to load')
     })
+}
+
+function getGeolocate(searchVal) {
+    console.log("searching...");
+    const address = searchVal.replace(' ', '+');
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${API_KEY}`
+    console.log(url);
+    // fetch(url).then(res => res.json())
+    // https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=YOUR_API_KEY
+
 }
