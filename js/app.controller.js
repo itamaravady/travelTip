@@ -15,6 +15,8 @@ window.onCopyLoc = onCopyLoc;
 
 var gPos;
 
+
+
 function onInit() {
     mapService.initMap()
         .then((map) => {

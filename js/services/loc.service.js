@@ -33,6 +33,8 @@ function getLocs() {
     });
 }
 
+
+
 function deleteLoc(locId) {
     const locIdx = locs.findIndex(loc => loc.id === locId)
     locs.splice(locIdx, 1)
