@@ -15,7 +15,15 @@ var gMarker;
 
 function initMap() {
     const pos = getCoordsFromQueryParams();
-    const { lat, lng } = (Object.keys(pos).length) ? pos : { lat: 31, lng: 31 };
+    if (Object.keys(pos).length) {
+        var lat = +pos.lat;
+        var lng = +pos.lng;
+        console.log(lat, lng);
+    }
+    else {
+        var lat = 35
+        var lng = 35
+    }
     console.log(pos);
     return _connectGoogleApi()
         .then(() => {
@@ -24,7 +32,6 @@ function initMap() {
                 document.querySelector('#map'), {
                 center: { lat, lng },
                 zoom: 15
-
             })
             // console.log('Map!', gMap);
             return getMap()

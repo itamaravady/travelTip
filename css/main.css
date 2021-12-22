@@ -27,6 +27,13 @@ body {
   transform: translate(100%, 0);
 }
 
+.notification {
+  display: none;
+  position: absolute;
+  background-color: antiquewhite;
+  border-radius: 0.5em;
+}
+
 .save-btn {
   color: white;
   background-color: rgb(133, 7, 145);
@@ -60,9 +67,9 @@ body {
   background-color: tomato;
 }
 
-.place h2, .place h4{
-    font-family: Arial, Helvetica, sans-serif;
-    text-transform: capitalize;
+.place h2, .place h4 {
+  font-family: Arial, Helvetica, sans-serif;
+  text-transform: capitalize;
 }
 
 .place-btns button {
@@ -85,9 +92,7 @@ body {
 .delete-btn {
   background-color: darkorange;
 }
+
 .delete-btn:hover {
   background-color: rgb(168, 98, 11);
 }
-
-
-

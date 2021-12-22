@@ -130,9 +130,24 @@ function onDeleteLoc(locId) {
 }
 
 
-function onCopyLoc() {
+function onCopyLoc(ev) {
     const { lat, lng } = mapService.copyLoc();
-    let copyLink = `https://itamaravady.github.io/travelTip/index.html?lat=${lat}&lng=${lng}`;
+    // let copyLink = `https://itamaravady.github.io/travelTip/index.html?lat=${lat}&lng=${lng}`;
+    let copyLink = `http://127.0.0.1:5501/index.html?lat=${lat}&lng=${lng}`;
     navigator.clipboard.writeText(copyLink);
+    console.log(ev);
+    showNotification('Location copied!', ev.clientX, ev.clientY);
+}
+
+function showNotification(msg, x, y) {
+    const elNotification = document.querySelector('.notification');
+    elNotification.style.left = `${x}px`;
+    elNotification.style.top = `${y}px`;
+    elNotification.innerText = msg;
+    console.log(x, y);
+    elNotification.style.display = 'block';
+    setTimeout(() => {
+        elNotification.style.display = 'none';
+    }, 800)
 }
 
