@@ -8,6 +8,7 @@ window.onGetLocs = onGetLocs;
 window.onGetUserPos = onGetUserPos;
 window.onPanToMyLoc = onPanToMyLoc;
 window.onSearchLoc = onSearchLoc;
+window.onSaveLoc = onSaveLoc;
 
 function onInit() {
     mapService.initMap()
@@ -22,7 +23,7 @@ function onInit() {
         })
         .catch(() => console.log('Error: cannot init map'));
 
-    document.querySelector('input[type=search]').addEventListener('input', onSearchLoc);
+    document.querySelector('input[type=search]').addEventListener('change', onSearchLoc);
 }
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
@@ -77,3 +78,10 @@ function onPanTo(lat = 31, lng = 31) {
     console.log('Panning the Map');
     mapService.panTo(lat, lng);
 }
+
+function onSaveLoc() {
+    const { lat, lng } = mapService.saveLoc();
+    let copyLink = `https://itamaravady.github.io/travelTip/index.html?lat=${lat}&lng=${lng}`;
+    navigator.clipboard.writeText(copyLink);
+}
+

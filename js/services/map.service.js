@@ -5,14 +5,17 @@ export const mapService = {
     addMarker,
     panTo,
     getGeolocate,
+    saveLoc,
 }
 
 
 var gMap;
 const API_KEY = 'AIzaSyCtnGiT2v1yGGn1vOvSjjAxBJQPURW-lao';
 
-function initMap(lat = 32.0749831, lng = 34.9120554) {
-    // console.log('InitMap');
+function initMap() {
+    const pos = getCoordsFromQueryParams();
+    const { lat, lng } = (Object.keys(pos).length) ? pos : { lat: 31, lng: 31 };
+    console.log(pos);
     return _connectGoogleApi()
         .then(() => {
             console.log('google available');
@@ -60,13 +63,30 @@ function _connectGoogleApi() {
 
 function getGeolocate(searchVal) {
     console.log("searching...");
-    const address = searchVal.replace(' ', '+');
+    const addressTrimmed = searchVal.trim();
+    const address = addressTrimmed.replace(' ', '+');
     const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${API_KEY}`
-    console.log(url);
-    // fetch(url).then(res => res.json())
-    // https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=YOUR_API_KEY
+    // console.log(url);
+    let pos;
+    fetch(url).then(res => res.json())
+        .then(res => {
+            const { lat, lng } = res.results[0].geometry.location;
+            panTo(lat, lng);
+        })
+        .catch(err => console.log('place not found'));
+
+
 }
 
 function getMap() {
     return gMap
+}
+
+function saveLoc() {
+    return gMap.center.toJSON();
+}
+
+function getCoordsFromQueryParams() {
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    return Object.fromEntries(urlSearchParams.entries());
 }
