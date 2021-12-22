@@ -11,7 +11,7 @@ window.onSearchLoc = onSearchLoc;
 window.onCreateLocation = onCreateLocation;
 window.onCloseModal = onCloseModal;
 window.onDeleteLoc = onDeleteLoc;
-window.onSaveLoc = onSaveLoc;
+window.onCopyLoc = onCopyLoc;
 
 var gPos;
 
@@ -128,8 +128,8 @@ function onDeleteLoc(locId) {
 }
 
 
-function onSaveLoc() {
-    const { lat, lng } = mapService.saveLoc();
+function onCopyLoc() {
+    const { lat, lng } = mapService.copyLoc();
     let copyLink = `https://itamaravady.github.io/travelTip/index.html?lat=${lat}&lng=${lng}`;
     navigator.clipboard.writeText(copyLink);
 }

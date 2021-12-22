@@ -5,7 +5,7 @@ export const mapService = {
     addMarker,
     panTo,
     getGeolocate,
-    saveLoc,
+    copyLoc: copyLoc,
 }
 
 
@@ -88,7 +88,7 @@ function getMap() {
     return gMap
 }
 
-function saveLoc() {
+function copyLoc() {
     return gMap.center.toJSON();
 }
 
