@@ -10,19 +10,28 @@
 
 
 <body>
-    <h1>TravelTip</h1>
-    <input type="search" placeholder="Search a place">
-    <div id="map" style="width: 100%; height: 400px;"></div>
-    <button onclick="onPanToMyLoc()" class="btn-my-location">My location</button>
-    <button onclick="onCopyLoc(event)" class="btn-save-location">Copy location</button>
+    <header class="header-main main-layout">
+        <h1>TravelTip</h1>
 
-    <p>You are at: <span class="user-pos"></span></p>
-    <div class="locations">
-        <h2>Locations:</h2>
-        <div class="loc-container">
-
+        <div class="container">
+            <input type="search" class="search-inp" placeholder="Search a place">
+            <button onclick="onPanToMyLoc()" class="btn-my-location">My location</button>
         </div>
-    </div>
+    </header>
+    <section class="find-me-section main-layout">
+        <p>You are at: <span class="user-pos"></span></p>
+        <button onclick="onCopyLoc(event)" class="btn-save-location">Copy location</button>
+    </section>
+    <section class="main-section main-layout">
+        <div id="map" style="width: 100%; height: 400px;"></div>
+
+        <div class="locations">
+            <h2 class="loc-header">Locations:</h2>
+            <div class="loc-container">
+
+            </div>
+        </div>
+    </section>
 
     <div class="modal">
         <label>Choose name:
@@ -33,6 +42,7 @@
     </div>
 
     <div class="notification"></div>
+
     <script type="module" src="js/app.controller.js"></script>
 </body>
 

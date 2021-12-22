@@ -24,7 +24,6 @@ function initMap() {
         var lat = 35
         var lng = 35
     }
-    console.log(pos);
     return _connectGoogleApi()
         .then(() => {
             console.log('google available');
@@ -32,6 +31,7 @@ function initMap() {
                 document.querySelector('#map'), {
                 center: { lat, lng },
                 zoom: 15
+
             })
             // console.log('Map!', gMap);
             return getMap()
@@ -83,6 +83,7 @@ function getGeolocate(searchVal) {
     let pos;
     fetch(url).then(res => res.json())
         .then(res => {
+            console.log(res);
             const { lat, lng } = res.results[0].geometry.location;
             panTo(lat, lng);
         })
